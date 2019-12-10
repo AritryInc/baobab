@@ -4,8 +4,9 @@
   "description": "Task management app for organizations",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon --watch src --exec babel-node src",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "sequelize db:migrate"
   },
   "author": "placeholder",
   "license": "ISC",

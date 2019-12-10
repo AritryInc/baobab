@@ -1,5 +1,6 @@
 import express  from 'express';
 import dotenv from 'dotenv';
+import route from './routes';
 
 dotenv.config();
 
@@ -15,6 +16,11 @@ app.get('/', (req, res, next) => {
     });
 });
 
+// API routes
+app.use('/api/v1', route);
+
 app.listen(PORT, () => {
     console.log(`Server started at port ${PORT}`);
 })
+
+export default app;
