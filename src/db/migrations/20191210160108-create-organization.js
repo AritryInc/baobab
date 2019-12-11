@@ -4,15 +4,22 @@ module.exports = {
     return queryInterface.createTable('Organizations', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
       },
-      name: {
-        type: Sequelize.STRING
+      organizationName: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
-      created_by: {
-        type: Sequelize.INTEGER
+      createdBy: {
+        type: Sequelize.UUID,
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,
