@@ -10,6 +10,11 @@ const app = express();
 
 app.set('port', PORT)
 
+app.use(express.urlencoded({
+    extended: false,
+}));
+app.use(express.json())
+
 app.get('/', (req, res, next) => {
     res.json({
         message: 'Baobab begins...!!!'
