@@ -1,28 +1,25 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Organization = sequelize.define('Organization', {
     id: {
-      type: DataTypes.UUID,
+      type: DataTypes.STRING,
       allowNull: false,
       primaryKey: true,
-      defaultValue: DataTypes.UUIDV4,
     },
-    organizationName: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     createdBy: {
-      type: DataTypes.UUID,
+      type: DataTypes.STRING,
       allowNull: false,
     },
   }, {});
-  Organization.associate = function(models) {
-    // associations can be defined here
+  Organization.associate = (models) => {
     Organization.belongsTo(models.User, {
       foreignKey: 'createdBy',
       as: 'owner',
-      onDelete: 'CASCADE'
-    })
+      onDelete: 'CASCADE',
+    });
   };
   return Organization;
 };
