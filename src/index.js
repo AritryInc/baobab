@@ -1,31 +1,31 @@
-import express  from 'express';
+import express from 'express';
 import dotenv from 'dotenv';
 import route from './routes';
 
 dotenv.config();
 
-const PORT = process.env.PORT;
+const { PORT } = process.env;
 
 const app = express();
 
-app.set('port', PORT)
+app.set('port', PORT);
 
 app.use(express.urlencoded({
-    extended: false,
+  extended: false,
 }));
-app.use(express.json())
+app.use(express.json());
 
-app.get('/', (req, res, next) => {
-    res.json({
-        message: 'Baobab begins...!!!'
-    });
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Baobab begins...!!!',
+  });
 });
 
 // API routes
 app.use('/api/v1', route);
 
 app.listen(PORT, () => {
-    console.log(`Server started at port ${PORT}`);
-})
+  console.log(`Server started at port ${PORT}`);
+});
 
 export default app;
