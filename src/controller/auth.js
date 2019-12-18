@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import models from '../db/models';
-import { createAndSyncDB } from '../db/local-models';
+import { createDB } from '../db/local-models';
 
 const { User, Organization } = models;
 
@@ -18,12 +18,12 @@ const SignUp = async (req, res) => {
       createdBy: user.id,
     });
 
-    await createAndSyncDB(org.id);
+    await createDB(org.id);
 
     return res.json({
       status: 201,
       user,
-      organization,
+      organization: org,
       message: 'User created successfully',
     });
   } catch (err) {
