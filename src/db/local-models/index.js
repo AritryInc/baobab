@@ -6,24 +6,17 @@ const { migrateDB, syncDB } = require('../databases');
 const config = require('../../config/database');
 
 const basename = path.basename(__filename);
-const databases = new Map();
 
-exports.createAndSyncDB = async (dbName) => {
+exports.createDB = async (dbName) => {
   await models.sequelize.query(`CREATE DATABASE ${dbName};`);
 
   const sequelize = new Sequelize(createConnection(dbName), config.options);
 
-  await migrateDB(sequelize, dbName);
-
-  const db = syncDB(sequelize, __dirname, basename);
-
-  databases.set(dbName, db);
-
-  return db;
+  return migrateDB(sequelize, dbName);
 };
 
-exports.getDB = async (dbName) => {
-  let db = databases.get(dbName);
+exports.getDB = ((dbs) => async (dbName) => {
+  let db = dbs.get(dbName);
 
   if (!db) {
     const sequelize = new Sequelize(createConnection(dbName), config.options);
@@ -32,10 +25,8 @@ exports.getDB = async (dbName) => {
 
     db = syncDB(sequelize, __dirname, basename);
 
-    databases.set(dbName, db);
+    dbs.set(dbName, db);
   }
 
   return db;
-};
-
-exports.databases = databases;
+})(new Map());
