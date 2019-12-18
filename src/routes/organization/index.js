@@ -1,8 +1,10 @@
 import { Router } from 'express';
-// import user from './users';
+import auth, { getAll } from '../../controller/authOrg';
 
 const route = Router();
 
-// route.use('/user', user);
+route.post('/auth', auth);
+
+route.get('/users', getAll);
 
 export default route;
