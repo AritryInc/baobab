@@ -1,7 +1,7 @@
 import Joi from '@hapi/joi';
-import { transformJoiError } from '../../utils/validation';
+import { transformJoiError } from '../../../utils/validation';
 
-export const signUp = (req, res, next) => {
+export const signup = (req, res, next) => {
   const schema = Joi.object({
     email: Joi
       .string()
@@ -9,12 +9,18 @@ export const signUp = (req, res, next) => {
       .message('please provide a valid email')
       .required()
       .messages({ 'string.empty': 'email cannot be empty' }),
-    organization: Joi
+    password: Joi
       .string()
       .ruleset
       .min(4)
-      .max(20)
-      .message('organization must be between 4 and 20 characters')
+      .max(16)
+      .message('password must be between 4 and 16 characters')
+      .required()
+      .messages({ 'string.empty': 'provide a password' }),
+    organizationId: Joi
+      .string()
+      .pattern(/org_\w{16}/)
+      .message('organization id is invalid')
       .required()
       .messages({ 'string.empty': 'provide an organization ID' }),
   });
@@ -30,3 +36,5 @@ export const signUp = (req, res, next) => {
 
   return next();
 };
+
+export const signin = (req, res, next) => signup(req, res, next);
