@@ -4,6 +4,6 @@ import * as validator from '../middleware/validator/auth';
 
 const route = Router();
 
-route.post('/signup', validator.signUp, controller.signUp);
+route.post('/signup', validator.signUp, controller.SignUp);
 
 export default route;

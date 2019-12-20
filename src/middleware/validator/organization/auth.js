@@ -1,7 +1,7 @@
 import Joi from '@hapi/joi';
-import { transformJoiError } from '../../../utils/validation';
+import Async from '../../../utils/async-wrapper';
 
-export const signup = (req, res, next) => {
+export const signup = Async(async (req, res, next) => {
   const schema = Joi.object({
     email: Joi
       .string()
@@ -25,16 +25,9 @@ export const signup = (req, res, next) => {
       .messages({ 'string.empty': 'provide an organization ID' }),
   });
 
-  const { error } = schema.validate(req.body, { abortEarly: false });
-
-  if (error) {
-    return res.status(400).json({
-      status: 'validation errors',
-      error: transformJoiError(error),
-    });
-  }
+  req.body = await schema.validateAsync(req.body, { abortEarly: false });
 
   return next();
-};
+});
 
 export const signin = (req, res, next) => signup(req, res, next);

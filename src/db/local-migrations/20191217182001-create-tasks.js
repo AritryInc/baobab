@@ -1,10 +1,9 @@
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.createTable('Tasks', {
     id: {
+      type: Sequelize.STRING,
       allowNull: false,
-      autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER,
     },
     name: {
       type: Sequelize.STRING,

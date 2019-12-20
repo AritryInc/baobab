@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import route from './routes';
+import Error from './error-handler';
 
 dotenv.config();
 
@@ -27,16 +28,13 @@ app.get('/', (req, res) => {
 app.use('/api/v1', route);
 
 app.use((req, res, next) => {
-  const error = new Error('Resource Not Found');
-  error.status = 404;
+  const error = Error.withDetails(404, 'Resource Not Found');
   next(error);
 });
 
 app.use((err, req, res, next) => {
-  console.log(err);
   res.status(err.status || 500).json({
-    status: 'error',
-    error: err.message || 'Internal Server Errror',
+    error: err.content,
   });
 });
 
