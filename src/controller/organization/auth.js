@@ -10,7 +10,6 @@ export const signup = async (req, res) => {
       user,
     });
   } catch (error) {
-    console.log(error);
     res.status(error.status).json({
       status: error.message,
     });
@@ -26,7 +25,6 @@ export const signin = async (req, res) => {
       user,
     });
   } catch (error) {
-    console.log(error);
     res.status(error.status).json({
       status: error.message,
     });
