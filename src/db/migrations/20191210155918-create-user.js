@@ -1,23 +1,33 @@
+const contraints = require('../database-constraints');
+
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Users', {
-    id: {
-      allowNull: false,
-      primaryKey: true,
-      type: Sequelize.STRING,
-    },
-    email: {
-      allowNull: false,
-      type: Sequelize.STRING,
-      unique: true,
-    },
-    createdAt: {
-      allowNull: false,
-      type: Sequelize.DATE,
-    },
-    updatedAt: {
-      allowNull: false,
-      type: Sequelize.DATE,
-    },
-  }),
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('Users', {
+      id: {
+        allowNull: false,
+        primaryKey: true,
+        type: Sequelize.STRING,
+      },
+      email: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+    });
+
+    await queryInterface.addConstraint('Users', ['email'], {
+      type: 'unique',
+      name: contraints.UNIQUE_EMAIL,
+    });
+
+    return true;
+  },
   down: (queryInterface) => queryInterface.dropTable('Users'),
 };

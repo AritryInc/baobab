@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate:all": "node ./src/scripts/migration.js all",
     "migrate:local": "node ./src/scripts/migration.js local",
-    "migrate:main": "node ./src/scripts/migration.js main"
+    "migrate:main": "node ./src/scripts/migration.js main",
+    "drop:local": "node ./src/scripts/migration.js drop:all"
   },
   "author": "placeholder",
   "license": "ISC",

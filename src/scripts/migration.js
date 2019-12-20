@@ -42,6 +42,15 @@ const migrateAllLocal = async () => {
   }
 };
 
+const dropAllLocal = async () => {
+  const organizations = await model.Organization.findAll({});
+
+  for (const organization of organizations) {
+    // eslint-disable-next-line no-await-in-loop
+    await model.sequelize.query(`DROP DATABASE ${organization.id}`);
+  }
+};
+
 (async () => {
   try {
     // eslint-disable-next-line no-unused-vars
@@ -61,6 +70,10 @@ const migrateAllLocal = async () => {
 
       case 'main':
         await migrateMainDB();
+        break;
+
+      case 'drop:all':
+        await dropAllLocal();
         break;
 
       default:
