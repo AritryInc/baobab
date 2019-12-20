@@ -10,11 +10,25 @@ export const signup = async (req, res) => {
       user,
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(error.status).json({
       status: error.message,
     });
   }
 };
 
-export const signin = () => 0;
+export const signin = async (req, res) => {
+  try {
+    const { email, password, organizationId } = req.body;
+    const user = await processor.signin({ email, password, organizationId });
+    res.status(200).json({
+      status: 'ok',
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(error.status).json({
+      status: error.message,
+    });
+  }
+};
